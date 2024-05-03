@@ -1,19 +1,23 @@
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
+import { TOGGLE_BOOLEAN, reducerSelect } from './reducerSelect';
 
 type AccordionPropsType = {
     titleValue: string
 }
 
 export const Accordion = (props: AccordionPropsType) => {
-    let [collapsed, setCollapsed] = useState(false)
+    //let [collapsed, setCollapsed] = useState(false)
+    let [collapsed, dispatch] = useReducer(reducerSelect,{collapsed:false})
 
-    const setCollapseHandler = () => {
+    
+
+    /* const setCollapseHandler = () => {
         setCollapsed(!collapsed)
-    }
+    } */
 
     return (
         <div>
-            <AccordionTitle title={props.titleValue} onClick={setCollapseHandler}/>
+            <AccordionTitle title={props.titleValue} onClick={()=> {dispatch({type:TOGGLE_BOOLEAN})}}/>
             {!collapsed && <AccordionBody/>}
         </div>
     );

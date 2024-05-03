@@ -1,7 +1,8 @@
-import React, { useEffect, KeyboardEvent } from "react";
+import React, { useEffect, KeyboardEvent, useReducer } from "react";
 import {  useState } from "react";
 import { ItemType } from "../Accordion/AccordionControlled";
 import styles from "../Select/Select.module.css";
+
 
 type SelectPropsType = {
   value?: any;
@@ -14,21 +15,27 @@ export function Select(props: SelectPropsType) {
     const [active,setActive] =useState(false)
     const [hoveredElementValue,setHoveredElementValue] =useState(props.value)
 
+    
+    
+   
+
 
     const selectedItem = props.items.find((i) => i.value === props.value);
     const hoveredItem = props.items.find((i) => i.value === hoveredElementValue);
 
-   /*  useEffect( () => {
+    useEffect( () => {
         hoveredElementValue(props.value);
-    }, [props.value]) */
+    }, [props.value])
 
 
-    const togggleItems = () => setActive(!active)
+    const togggleItems = () =>  setActive(!active) 
+    /* const togggleItems = dispatch( ) */
 
     
     const onItemClick = (value:any) => {
         props.onChange(value);
         togggleItems();
+        
     }
 
     const onKeyPress = (e:KeyboardEvent<HTMLDivElement>) => {
@@ -47,7 +54,7 @@ export function Select(props: SelectPropsType) {
         <option value="">Kiev</option>
       </select> */}
       <div className={styles.select + " " + (active ? styles.active : '')} onKeyUp ={onKeyPress} tabIndex={0}>
-        <span className={styles.main} onClick={togggleItems} >{selectedItem && selectedItem.title}</span>
+        <span className={styles.main} onClick={onItemClick} >{selectedItem && selectedItem.title}</span>
 
         <div className={styles.items}>
           {props.items.map((i) => (
